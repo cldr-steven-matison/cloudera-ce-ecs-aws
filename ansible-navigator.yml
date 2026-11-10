@@ -52,12 +52,18 @@ ansible-navigator:
         ANSIBLE_DEPRECATION_WARNINGS: false
         ANSIBLE_HOST_KEY_CHECKING: false
         ANSIBLE_SSH_RETRIES: 10
-    image: ghcr.io/cloudera-labs/cloudera-ce-ecs-aws:latest
+    # srm-561: :latest pinned by its 2026-10-30 index digest (amd64 + arm64, built with e9ed51e);
+    # arm64 runs natively on the M4. Re-pin on purpose, never by a pull of :latest.
+    image: ghcr.io/cloudera-labs/cloudera-ce-ecs-aws@sha256:855d5b0a929d2483adedd6b47991da7af4fafa8572d6c5c013ae1d52b856b3a1
     pull:
-      policy: tag
+      policy: missing
     volume-mounts:
       - src: "${CDP_LICENSE_FILE}"
         dest: "${CDP_LICENSE_FILE}"
+      # srm-561: the BrainShare #345 Caddy patch (COPR @caddy/caddy is unchanged in cloudera.exe
+      # 51d7636). ECS_REPO is exported by BrainShare files/issue-561/ecs-common.sh.
+      - src: "${ECS_REPO}/patches/RedHat-pre.yml"
+        dest: "/usr/share/ansible/collections/ansible_collections/cloudera/exe/roles/caddy/tasks/RedHat-pre.yml"
       # Optional pre-existing SSH key
       # - src: "${SSH_PRIVATE_KEY_FILE}"
       #   dest: "${SSH_PRIVATE_KEY_FILE}"
