@@ -320,6 +320,9 @@
   gather_facts: false
   become: true
   vars:
+    # srm-561: prereq_python points /usr/bin/python3 (and pip3) at 3.11, but modules here ran on
+    # /usr/libexec/platform-python (3.9), which cannot import the kubernetes pip3 installs (BrainShare #561).
+    ansible_python_interpreter: /usr/bin/python3
     kubeconfig_path: /etc/rancher/rke2/rke2.yaml
     kubectl_path: /var/lib/rancher/rke2/bin/kubectl
     configmap_name: rke2-coredns-rke2-coredns
@@ -413,6 +416,7 @@
   gather_facts: false
   become: true
   vars:
+    ansible_python_interpreter: /usr/bin/python3   # srm-561: see the CoreDNS play
     kubeconfig_path: /etc/rancher/rke2/rke2.yaml
     kubectl_path: /var/lib/rancher/rke2/bin/kubectl
     configmap_name: rke2-coredns-rke2-coredns
