@@ -320,9 +320,6 @@
   gather_facts: false
   become: true
   vars:
-    # srm-561: prereq_python points /usr/bin/python3 (and pip3) at 3.11, but modules here ran on
-    # /usr/libexec/platform-python (3.9), which cannot import the kubernetes pip3 installs (BrainShare #561).
-    ansible_python_interpreter: /usr/bin/python3
     kubeconfig_path: /etc/rancher/rke2/rke2.yaml
     kubectl_path: /var/lib/rancher/rke2/bin/kubectl
     configmap_name: rke2-coredns-rke2-coredns
@@ -332,6 +329,14 @@
   tags:
     - coredns
   tasks:
+    # srm-561/599: prereq_python points /usr/bin/python3 (and pip3) at 3.11, but modules here ran on
+    # /usr/libexec/platform-python (3.9), which cannot import the kubernetes pip3 installs. In a full run
+    # prereq_thp and prereq_selinux include_vars ansible_python_interpreter=platform-python, which outranks
+    # play and task vars; only a set_fact outranks it (BrainShare #561, #599).
+    - name: Run the kubernetes modules on /usr/bin/python3
+      ansible.builtin.set_fact:
+        ansible_python_interpreter: /usr/bin/python3
+
     - name: Ensure kubectl binary is present
       ansible.builtin.stat:
         path: "{{ kubectl_path }}"
@@ -416,7 +421,6 @@
   gather_facts: false
   become: true
   vars:
-    ansible_python_interpreter: /usr/bin/python3   # srm-561: see the CoreDNS play
     kubeconfig_path: /etc/rancher/rke2/rke2.yaml
     kubectl_path: /var/lib/rancher/rke2/bin/kubectl
     configmap_name: rke2-coredns-rke2-coredns
@@ -426,6 +430,10 @@
   tags:
     - coredns
   tasks:
+    - name: Run the kubernetes modules on /usr/bin/python3   # srm-561/599: see the CoreDNS play
+      ansible.builtin.set_fact:
+        ansible_python_interpreter: /usr/bin/python3
+
     - name: Ensure kubectl binary is present
       ansible.builtin.stat:
         path: "{{ kubectl_path }}"
