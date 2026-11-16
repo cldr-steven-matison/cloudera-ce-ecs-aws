@@ -40,7 +40,7 @@ data "aws_ami" "pvc_base" {
 # ------- Gateway Host -------
 
 module "gateway" {
-  source     = "git::https://github.com/cloudera-labs/terraform-cloudera-ce-infrastructure-aws.git//modules/hosts?ref=main"
+  source     = "git::https://github.com/cloudera-labs/terraform-cloudera-ce-infrastructure-aws.git//modules/hosts?ref=c5b59812280d79487bcb72a21edf65c2e07d581b"
   depends_on = [aws_key_pair.pvc_base, data.aws_ami.pvc_base]
 
   providers = {
@@ -92,7 +92,7 @@ resource "ansible_host" "gateway" {
 # ------- Services Host -------
 
 module "services" {
-  source     = "git::https://github.com/cloudera-labs/terraform-cloudera-ce-infrastructure-aws.git//modules/hosts?ref=main"
+  source     = "git::https://github.com/cloudera-labs/terraform-cloudera-ce-infrastructure-aws.git//modules/hosts?ref=c5b59812280d79487bcb72a21edf65c2e07d581b"
   depends_on = [aws_key_pair.pvc_base, data.aws_ami.pvc_base]
 
   providers = {

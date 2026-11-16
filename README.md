@@ -25,10 +25,12 @@ Ansible + Terraform automation for deploying Cloudera Private Cloud on AWS. Cons
 ## This fork
 
 This is a fork of [`cloudera-labs/cloudera-ce-ecs-aws`](https://github.com/cloudera-labs/cloudera-ce-ecs-aws).
-`main` matches upstream. Branch `srm-561` is upstream plus three changes I needed to deploy it from a Mac:
+`main` matches upstream. Branch `srm-561` is upstream plus four changes I needed to deploy it from a Mac:
 
 - `ansible-navigator.yml` pins the execution environment by digest instead of `:latest`, so every run
   uses the same image.
+- `tf_cluster_aws/*.tf` pin the Terraform host and network modules to commit `c5b5981` instead of
+  `main`, for the same reason.
 - `patches/RedHat-pre.yml` is mounted over the `cloudera.exe` Caddy role's install tasks. The stock role
   runs `dnf copr enable @caddy/caddy`, which RHEL 9 EC2 hosts without a Red Hat subscription cannot
   reach. The patch builds a local Caddy RPM from the upstream release binary instead.

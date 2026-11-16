@@ -17,7 +17,7 @@
 #ecs_masters (1), ecs_workers (3)
 
 module "ecs_masters" {
-  source     = "git::https://github.com/cloudera-labs/terraform-cloudera-ce-infrastructure-aws.git//modules/hosts?ref=main"
+  source     = "git::https://github.com/cloudera-labs/terraform-cloudera-ce-infrastructure-aws.git//modules/hosts?ref=c5b59812280d79487bcb72a21edf65c2e07d581b"
   depends_on = [aws_key_pair.pvc_base, data.aws_ami.pvc_base]
 
   providers = {
@@ -57,7 +57,7 @@ resource "ansible_host" "ecs_masters" {
 }
 
 module "ecs_workers" {
-  source     = "git::https://github.com/cloudera-labs/terraform-cloudera-ce-infrastructure-aws.git//modules/hosts?ref=main"
+  source     = "git::https://github.com/cloudera-labs/terraform-cloudera-ce-infrastructure-aws.git//modules/hosts?ref=c5b59812280d79487bcb72a21edf65c2e07d581b"
   depends_on = [aws_key_pair.pvc_base, data.aws_ami.pvc_base]
 
   providers = {

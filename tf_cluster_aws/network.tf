@@ -15,7 +15,7 @@
 # ------- Cluster Network and Prefix List -------
 
 module "cluster_network" {
-  source = "git::https://github.com/cloudera-labs/terraform-cloudera-ce-infrastructure-aws.git//modules/network?ref=main"
+  source = "git::https://github.com/cloudera-labs/terraform-cloudera-ce-infrastructure-aws.git//modules/network?ref=c5b59812280d79487bcb72a21edf65c2e07d581b"
 
   prefix = var.prefix
   vpc_id = aws_vpc.pvc_base.id

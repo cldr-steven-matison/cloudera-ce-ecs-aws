@@ -16,7 +16,7 @@
 # Multi-node CDH cluster: masters (3), workers (4), CMS (1), SDX (1)
 
 module "manager" {
-  source     = "git::https://github.com/cloudera-labs/terraform-cloudera-ce-infrastructure-aws.git//modules/hosts?ref=main"
+  source     = "git::https://github.com/cloudera-labs/terraform-cloudera-ce-infrastructure-aws.git//modules/hosts?ref=c5b59812280d79487bcb72a21edf65c2e07d581b"
   depends_on = [aws_key_pair.pvc_base, data.aws_ami.pvc_base]
 
   providers = {
@@ -54,7 +54,7 @@ resource "ansible_host" "manager" {
 }
 
 module "sdx" {
-  source     = "git::https://github.com/cloudera-labs/terraform-cloudera-ce-infrastructure-aws.git//modules/hosts?ref=main"
+  source     = "git::https://github.com/cloudera-labs/terraform-cloudera-ce-infrastructure-aws.git//modules/hosts?ref=c5b59812280d79487bcb72a21edf65c2e07d581b"
   depends_on = [aws_key_pair.pvc_base, data.aws_ami.pvc_base]
 
   providers = {
@@ -94,7 +94,7 @@ resource "ansible_host" "sdx" {
 }
 
 module "base_masters" {
-  source     = "git::https://github.com/cloudera-labs/terraform-cloudera-ce-infrastructure-aws.git//modules/hosts?ref=main"
+  source     = "git::https://github.com/cloudera-labs/terraform-cloudera-ce-infrastructure-aws.git//modules/hosts?ref=c5b59812280d79487bcb72a21edf65c2e07d581b"
   depends_on = [aws_key_pair.pvc_base, data.aws_ami.pvc_base]
 
   providers = {
@@ -134,7 +134,7 @@ resource "ansible_host" "base_masters" {
 }
 
 module "base_workers" {
-  source     = "git::https://github.com/cloudera-labs/terraform-cloudera-ce-infrastructure-aws.git//modules/hosts?ref=main"
+  source     = "git::https://github.com/cloudera-labs/terraform-cloudera-ce-infrastructure-aws.git//modules/hosts?ref=c5b59812280d79487bcb72a21edf65c2e07d581b"
   depends_on = [aws_key_pair.pvc_base, data.aws_ami.pvc_base]
 
   providers = {
