@@ -329,10 +329,9 @@
   tags:
     - coredns
   tasks:
-    # srm-561/599: prereq_python points /usr/bin/python3 (and pip3) at 3.11, but modules here ran on
-    # /usr/libexec/platform-python (3.9), which cannot import the kubernetes pip3 installs. In a full run
-    # prereq_thp and prereq_selinux include_vars ansible_python_interpreter=platform-python, which outranks
-    # play and task vars; only a set_fact outranks it (BrainShare #561, #599).
+    # pip3 installs kubernetes into Python 3.11 (/usr/bin/python3), but prereq_thp and prereq_selinux
+    # set ansible_python_interpreter to platform-python (3.9) with include_vars, which outranks play and
+    # task vars. A set_fact outranks include_vars, so the kubernetes modules below run on 3.11.
     - name: Run the kubernetes modules on /usr/bin/python3
       ansible.builtin.set_fact:
         ansible_python_interpreter: /usr/bin/python3
@@ -430,7 +429,7 @@
   tags:
     - coredns
   tasks:
-    - name: Run the kubernetes modules on /usr/bin/python3   # srm-561/599: see the CoreDNS play
+    - name: Run the kubernetes modules on /usr/bin/python3   # see the CoreDNS play above
       ansible.builtin.set_fact:
         ansible_python_interpreter: /usr/bin/python3
 

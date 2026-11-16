@@ -1,5 +1,5 @@
 ---
-# PATCH (#292): Caddy on RHEL 9 without a Red Hat subscription.
+# Caddy on RHEL 9 without a Red Hat subscription.
 #
 # The stock role enables the COPR @caddy/caddy repo. On an unregistered EC2 host the RHEL 9
 # COPR repo answers 503, Cloudsmith's el/9 caddy repo is empty, and Caddy 2.11+ ships no RPM at
@@ -71,7 +71,7 @@
           Type=notify
           User=caddy
           Group=caddy
-          # PATCH (#292): the service must own its home or the self-signed PKI cannot be written
+          # The service must own its home or the self-signed PKI cannot be written
           ExecStartPre=+/bin/chown -R caddy:caddy /var/lib/caddy
           ExecStart=/usr/bin/caddy run --environ --config /etc/caddy/Caddyfile
           ExecReload=/usr/bin/caddy reload --config /etc/caddy/Caddyfile --force
